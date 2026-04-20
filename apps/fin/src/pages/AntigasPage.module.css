@@ -1,0 +1,42 @@
+.page {
+  max-width: 800px;
+}
+
+.heading {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: var(--space-6);
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.label {
+  font-size: 11px;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.loading, .empty {
+  color: var(--text2);
+}
+
+.error {
+  color: var(--red);
+  font-size: 13px;
+}
+
+.list {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.item:last-child > * {
+  border-bottom: none;
+}

@@ -1,0 +1,35 @@
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  border-left-width: 3px;
+}
+
+.label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text2);
+}
+
+.value {
+  font-family: var(--font-headline);
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.green { border-left-color: var(--green); }
+.green .value { color: var(--green); }
+
+.red { border-left-color: var(--red); }
+.red .value { color: var(--red); }
+
+.amber { border-left-color: var(--amber); }
+.amber .value { color: var(--amber); }
+
+.blue { border-left-color: var(--blue); }
+.blue .value { color: var(--blue); }

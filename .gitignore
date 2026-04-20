@@ -1,0 +1,24 @@
+# Claude Code (arquivos internos do agente)
+.claude/
+
+# Ambiente — NUNCA commitar
+.env
+.env.local
+.env.*.local
+*.local
+
+# Dependências
+node_modules/
+
+# Build
+dist/
+build/
+.vite/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/settings.json
+.idea/

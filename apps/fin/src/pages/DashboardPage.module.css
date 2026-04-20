@@ -1,0 +1,36 @@
+.page {
+  max-width: 900px;
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+.heading {
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.mes {
+  font-size: 13px;
+  color: var(--text2);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+.loading {
+  color: var(--text2);
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

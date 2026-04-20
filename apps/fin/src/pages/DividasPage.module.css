@@ -1,0 +1,145 @@
+.page {
+  max-width: 800px;
+}
+
+.heading {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: var(--space-6);
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.label {
+  font-size: 11px;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.loading, .empty {
+  color: var(--text2);
+  font-size: 14px;
+}
+
+.error {
+  color: var(--red);
+  font-size: 13px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.item {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.concluida {
+  opacity: 0.5;
+}
+
+.itemHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.itemLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.nome {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.itemRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.valor {
+  font-family: var(--font-headline);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--red);
+}
+
+.parcela {
+  font-size: 11px;
+  color: var(--text2);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.btnParcela {
+  background: var(--green);
+  color: #000;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: var(--space-1) var(--space-3);
+  font-size: 12px;
+  font-weight: 500;
+  transition: opacity 0.15s;
+}
+
+.btnParcela:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.btnParcela:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.btnUndo {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text2);
+  border-radius: var(--radius-sm);
+  padding: var(--space-1) var(--space-3);
+  font-size: 12px;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.btnUndo:hover {
+  color: var(--text);
+  border-color: var(--text2);
+}
+
+.btnRemover {
+  background: none;
+  border: none;
+  color: var(--text2);
+  font-size: 12px;
+  padding: var(--space-1) var(--space-2);
+  margin-left: auto;
+  transition: color 0.15s;
+}
+
+.btnRemover:hover {
+  color: var(--red);
+}

@@ -1,0 +1,74 @@
+.shell {
+  display: flex;
+  height: 100%;
+}
+
+.sidebar {
+  width: 200px;
+  min-height: 100%;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-6) 0;
+  flex-shrink: 0;
+}
+
+.logo {
+  font-family: var(--font-headline);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--green);
+  padding: 0 var(--space-6);
+  margin-bottom: var(--space-8);
+  letter-spacing: -0.02em;
+}
+
+.navList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.link {
+  display: block;
+  padding: var(--space-2) var(--space-6);
+  font-size: 13px;
+  color: var(--text2);
+  border-radius: 0;
+  transition: color 0.15s, background 0.15s;
+}
+
+.link:hover {
+  color: var(--text);
+  background: var(--bg3);
+}
+
+.active {
+  color: var(--text) !important;
+  background: var(--bg3);
+  border-right: 2px solid var(--green);
+}
+
+.signout {
+  background: none;
+  border: none;
+  color: var(--text2);
+  font-size: 13px;
+  padding: var(--space-2) var(--space-6);
+  text-align: left;
+  transition: color 0.15s;
+  margin-top: var(--space-4);
+}
+
+.signout:hover {
+  color: var(--red);
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-8);
+}
