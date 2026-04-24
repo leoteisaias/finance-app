@@ -1,20 +1,19 @@
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '@/lib/supabase'
-import type { Divida, NovaDivida } from '@/types/index'
+import type { RendaFixa, NovaRendaFixa } from '@/types/index'
 
-interface UseDividasReturn {
-  dividas: Divida[]
+interface UseRendasFixasReturn {
+  rendasFixas: RendaFixa[]
   loading: boolean
   error: string | null
-  adicionar: (nova: NovaDivida) => Promise<void>
-  atualizar: (id: string, updates: NovaDivida) => Promise<void>
-  atualizarParcela: (id: string, parcelasPagas: number) => Promise<void>
+  adicionar: (nova: NovaRendaFixa) => Promise<void>
+  atualizar: (id: string, updates: NovaRendaFixa) => Promise<void>
   remover: (id: string) => Promise<void>
   recarregar: () => void
 }
 
-export function useDividas(): UseDividasReturn {
-  const [dividas, setDividas] = useState<Divida[]>([])
+export function useRendasFixas(): UseRendasFixasReturn {
+  const [rendasFixas, setRendasFixas] = useState<RendaFixa[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -23,14 +22,14 @@ export function useDividas(): UseDividasReturn {
     setError(null)
 
     const { data, error: err } = await supabase
-      .from('dividas')
+      .from('rendas_fixas')
       .select('*')
       .order('created_at', { ascending: false })
 
     if (err) {
       setError(err.message)
     } else {
-      setDividas((data as Divida[]) ?? [])
+      setRendasFixas((data as RendaFixa[]) ?? [])
     }
     setLoading(false)
   }, [])
@@ -39,32 +38,22 @@ export function useDividas(): UseDividasReturn {
     void carregar()
   }, [carregar])
 
-  const adicionar = async (nova: NovaDivida) => {
+  const adicionar = async (nova: NovaRendaFixa) => {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) throw new Error('Usuário não autenticado')
 
     const { error: err } = await supabase
-      .from('dividas')
+      .from('rendas_fixas')
       .insert({ ...nova, user_id: user.id })
 
     if (err) throw err
     void carregar()
   }
 
-  const atualizar = async (id: string, updates: NovaDivida) => {
+  const atualizar = async (id: string, updates: NovaRendaFixa) => {
     const { error: err } = await supabase
-      .from('dividas')
+      .from('rendas_fixas')
       .update(updates)
-      .eq('id', id)
-
-    if (err) throw err
-    void carregar()
-  }
-
-  const atualizarParcela = async (id: string, parcelasPagas: number) => {
-    const { error: err } = await supabase
-      .from('dividas')
-      .update({ parcelas_pagas: parcelasPagas })
       .eq('id', id)
 
     if (err) throw err
@@ -73,7 +62,7 @@ export function useDividas(): UseDividasReturn {
 
   const remover = async (id: string) => {
     const { error: err } = await supabase
-      .from('dividas')
+      .from('rendas_fixas')
       .delete()
       .eq('id', id)
 
@@ -81,5 +70,5 @@ export function useDividas(): UseDividasReturn {
     void carregar()
   }
 
-  return { dividas, loading, error, adicionar, atualizar, atualizarParcela, remover, recarregar: carregar }
+  return { rendasFixas, loading, error, adicionar, atualizar, remover, recarregar: carregar }
 }

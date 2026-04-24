@@ -3,11 +3,14 @@ import { signOut } from '@/hooks/useAuth'
 import styles from './Layout.module.css'
 
 const NAV_ITEMS = [
-  { to: '/dashboard',     label: 'dashboard' },
-  { to: '/dividas',       label: 'dívidas ativas' },
-  { to: '/antigas',       label: 'dívidas antigas' },
-  { to: '/gastos',        label: 'gastos' },
-  { to: '/investimentos', label: 'investimentos' },
+  { to: '/dashboard', label: 'DASHBOARD' },
+  { to: '/rendas/fixas', label: 'Rendas fixas' },
+  { to: '/rendas/variaveis', label: 'Rendas variáveis' },
+  { to: '/dividas', label: 'Dívidas ativas' },
+  { to: '/antigas', label: 'Dívidas antigas' },
+  { to: '/gastos', label: 'Gastos' },
+  { to: '/investimentos', label: 'Investimentos' },
+
 ]
 
 export function Layout() {

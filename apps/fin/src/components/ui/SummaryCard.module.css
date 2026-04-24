@@ -7,7 +7,24 @@
   flex-direction: column;
   gap: var(--space-2);
   border-left-width: 3px;
+  text-decoration: none;
+  color: inherit;
 }
+
+.clickable {
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.clickable:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.green.clickable:hover  { border-color: rgba(77, 255, 145, 0.5); }
+.red.clickable:hover    { border-color: rgba(255, 92, 92, 0.5); }
+.amber.clickable:hover  { border-color: rgba(255, 193, 77, 0.5); }
+.blue.clickable:hover   { border-color: rgba(77, 184, 255, 0.5); }
 
 .label {
   font-size: 11px;

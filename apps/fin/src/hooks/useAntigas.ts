@@ -7,6 +7,7 @@ interface UseAntigasReturn {
   loading: boolean
   error: string | null
   adicionar: (nova: NovaDividaAntiga) => Promise<void>
+  atualizar: (id: string, updates: NovaDividaAntiga) => Promise<void>
   remover: (id: string) => Promise<void>
   recarregar: () => void
 }
@@ -49,6 +50,16 @@ export function useAntigas(): UseAntigasReturn {
     void carregar()
   }
 
+  const atualizar = async (id: string, updates: NovaDividaAntiga) => {
+    const { error: err } = await supabase
+      .from('dividas_antigas')
+      .update(updates)
+      .eq('id', id)
+
+    if (err) throw err
+    void carregar()
+  }
+
   const remover = async (id: string) => {
     const { error: err } = await supabase
       .from('dividas_antigas')
@@ -59,5 +70,5 @@ export function useAntigas(): UseAntigasReturn {
     void carregar()
   }
 
-  return { antigas, loading, error, adicionar, remover, recarregar: carregar }
+  return { antigas, loading, error, adicionar, atualizar, remover, recarregar: carregar }
 }

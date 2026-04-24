@@ -80,15 +80,16 @@ export function InvestimentosPage() {
       ) : (
         <div className={styles.list}>
           {investimentos.map(i => (
-            <ItemRow
-              key={i.id}
-              label={i.descricao}
-              value={i.valor}
-              date={i.data}
-              category={i.categoria}
-              accent="amber"
-              onDelete={() => void remover(i.id)}
-            />
+            <div key={i.id} className={styles.item}>
+              <ItemRow
+                label={i.descricao}
+                value={i.valor}
+                date={i.data}
+                category={i.categoria}
+                accent="amber"
+                onDelete={() => void remover(i.id)}
+              />
+            </div>
           ))}
         </div>
       )}

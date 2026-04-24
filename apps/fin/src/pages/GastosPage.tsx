@@ -6,7 +6,7 @@ import { mesAtual, fmtMes, fmtBRL } from '@/utils/format'
 import type { NovoGasto, CategoriaGasto } from '@/types/index'
 import styles from './GastosPage.module.css'
 
-const CATEGORIAS: CategoriaGasto[] = ['alimentação', 'transporte', 'saúde', 'lazer', 'casa', 'educação', 'outros']
+const CATEGORIAS: CategoriaGasto[] = ['alimentação', 'transporte', 'outros']
 
 const hoje = new Date().toISOString().slice(0, 10)
 
@@ -80,15 +80,16 @@ export function GastosPage() {
       ) : (
         <div className={styles.list}>
           {gastos.map(g => (
-            <ItemRow
-              key={g.id}
-              label={g.descricao}
-              value={g.valor}
-              date={g.data}
-              category={g.categoria}
-              accent="blue"
-              onDelete={() => void remover(g.id)}
-            />
+            <div key={g.id} className={styles.item}>
+              <ItemRow
+                label={g.descricao}
+                value={g.valor}
+                date={g.data}
+                category={g.categoria}
+                accent="blue"
+                onDelete={() => void remover(g.id)}
+              />
+            </div>
           ))}
         </div>
       )}
