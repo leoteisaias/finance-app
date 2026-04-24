@@ -39,11 +39,16 @@ export function DividasPage() {
   const [saving, setSaving] = useState(false)
   const [formError, setFormError] = useState<string | null>(null)
 
+  const [valorTotalStr, setValorTotalStr] = useState('')
+  const [valorParcelaStr, setValorParcelaStr] = useState('')
+
   const [editandoId, setEditandoId] = useState<string | null>(null)
   const [editForm, setEditForm] = useState<NovaDivida>(FORM_INICIAL)
   const [editSaving, setEditSaving] = useState(false)
   const [editError, setEditError] = useState<string | null>(null)
   const [deleteError, setDeleteError] = useState<string | null>(null)
+  const [editValorTotalStr, setEditValorTotalStr] = useState('')
+  const [editValorParcelaStr, setEditValorParcelaStr] = useState('')
 
   const set = (field: keyof NovaDivida, value: string | number) =>
     setForm(prev => ({ ...prev, [field]: value }))
@@ -58,8 +63,10 @@ export function DividasPage() {
     try {
       await adicionar(form)
       setForm(FORM_INICIAL)
+      setValorTotalStr('')
+      setValorParcelaStr('')
     } catch (err) {
-      setFormError(err instanceof Error ? err.message : 'Erro ao adicionar')
+      setFormError(err instanceof Error ? err.message : (err as { message?: string }).message ?? 'Erro ao adicionar')
     } finally {
       setSaving(false)
     }
@@ -68,6 +75,8 @@ export function DividasPage() {
   const abrirEdicao = (d: Divida) => {
     setEditandoId(d.id)
     setEditForm(dividaParaForm(d))
+    setEditValorTotalStr(d.valor_total != null ? String(d.valor_total) : '')
+    setEditValorParcelaStr(String(d.valor_parcela))
     setEditError(null)
   }
 
@@ -85,7 +94,7 @@ export function DividasPage() {
       await atualizar(editandoId, editForm)
       setEditandoId(null)
     } catch (err) {
-      setEditError(err instanceof Error ? err.message : 'Erro ao salvar')
+      setEditError(err instanceof Error ? err.message : (err as { message?: string }).message ?? 'Erro ao salvar')
     } finally {
       setEditSaving(false)
     }
@@ -96,7 +105,7 @@ export function DividasPage() {
     try {
       await remover(id)
     } catch (err) {
-      setDeleteError(err instanceof Error ? err.message : 'Erro ao remover')
+      setDeleteError(err instanceof Error ? err.message : (err as { message?: string }).message ?? 'Erro ao remover')
     }
   }
 
@@ -114,11 +123,33 @@ export function DividasPage() {
         </div>
         <div className={styles.fieldGroup}>
           <label className={styles.label}>valor total <span className={styles.opcional}>(opcional)</span></label>
-          <input type="number" min="0.01" step="0.01" value={form.valor_total ?? ''} onChange={e => set('valor_total', e.target.value ? parseFloat(e.target.value) : null as unknown as number)} placeholder="ex: 3000" />
+          <input
+            type="text"
+            inputMode="decimal"
+            value={valorTotalStr}
+            placeholder="ex: 3000"
+            onChange={e => {
+              const str = e.target.value
+              setValorTotalStr(str)
+              const num = parseFloat(str.replace(',', '.'))
+              set('valor_total', str === '' ? null as unknown as number : isNaN(num) ? null as unknown as number : num)
+            }}
+          />
         </div>
         <div className={styles.fieldGroup}>
           <label className={styles.label}>valor parcela</label>
-          <input type="number" min="0.01" step="0.01" value={form.valor_parcela || ''} onChange={e => set('valor_parcela', parseFloat(e.target.value) || 0)} required />
+          <input
+            type="text"
+            inputMode="decimal"
+            value={valorParcelaStr}
+            required
+            onChange={e => {
+              const str = e.target.value
+              setValorParcelaStr(str)
+              const num = parseFloat(str.replace(',', '.'))
+              set('valor_parcela', isNaN(num) ? 0 : num)
+            }}
+          />
         </div>
         <div className={styles.fieldGroup}>
           <label className={styles.label}>total parcelas</label>
@@ -166,11 +197,33 @@ export function DividasPage() {
                       </div>
                       <div className={styles.fieldGroup}>
                         <label className={styles.label}>valor total <span className={styles.opcional}>(opcional)</span></label>
-                        <input type="number" min="0.01" step="0.01" value={editForm.valor_total ?? ''} onChange={e => setEdit('valor_total', e.target.value ? parseFloat(e.target.value) : null as unknown as number)} placeholder="ex: 3000" />
+                        <input
+                          type="text"
+                          inputMode="decimal"
+                          value={editValorTotalStr}
+                          placeholder="ex: 3000"
+                          onChange={e => {
+                            const str = e.target.value
+                            setEditValorTotalStr(str)
+                            const num = parseFloat(str.replace(',', '.'))
+                            setEdit('valor_total', str === '' ? null as unknown as number : isNaN(num) ? null as unknown as number : num)
+                          }}
+                        />
                       </div>
                       <div className={styles.fieldGroup}>
                         <label className={styles.label}>valor parcela</label>
-                        <input type="number" min="0.01" step="0.01" value={editForm.valor_parcela || ''} onChange={e => setEdit('valor_parcela', parseFloat(e.target.value) || 0)} required />
+                        <input
+                          type="text"
+                          inputMode="decimal"
+                          value={editValorParcelaStr}
+                          required
+                          onChange={e => {
+                            const str = e.target.value
+                            setEditValorParcelaStr(str)
+                            const num = parseFloat(str.replace(',', '.'))
+                            setEdit('valor_parcela', isNaN(num) ? 0 : num)
+                          }}
+                        />
                       </div>
                       <div className={styles.fieldGroup}>
                         <label className={styles.label}>total parcelas</label>

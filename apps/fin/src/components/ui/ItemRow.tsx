@@ -4,7 +4,7 @@ import { fmtBRL, fmtData } from '@/utils/format'
 
 interface ItemRowProps {
   label: string
-  value: number
+  value?: number | null
   date?: string
   category?: string
   accent?: 'green' | 'red' | 'amber' | 'blue'
@@ -22,7 +22,7 @@ export function ItemRow({ label, value, date, category, accent = 'green', onDele
         </div>
       </div>
       <div className={styles.right}>
-        <span className={`${styles.value} ${styles[accent]}`}>{fmtBRL(value)}</span>
+        {value != null && <span className={`${styles.value} ${styles[accent]}`}>{fmtBRL(value)}</span>}
         {onDelete && (
           <button className={styles.deleteBtn} onClick={onDelete} aria-label="Remover">
             ×

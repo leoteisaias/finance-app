@@ -27,6 +27,9 @@ export function RendasVariaveisPage() {
   const [saving, setSaving] = useState(false)
   const [formError, setFormError] = useState<string | null>(null)
 
+  const [valorStr, setValorStr] = useState('')
+  const [editValorStr, setEditValorStr] = useState('')
+
   const [editandoId, setEditandoId] = useState<string | null>(null)
   const [editForm, setEditForm] = useState<NovaRendaVariavel>(FORM_INICIAL)
   const [editSaving, setEditSaving] = useState(false)
@@ -42,8 +45,9 @@ export function RendasVariaveisPage() {
     try {
       await adicionar(form)
       setForm({ ...FORM_INICIAL, data: new Date().toISOString().slice(0, 10) })
+      setValorStr('')
     } catch (err) {
-      setFormError(err instanceof Error ? err.message : 'Erro ao adicionar')
+      setFormError(err instanceof Error ? err.message : (err as { message?: string }).message ?? 'Erro ao adicionar')
     } finally {
       setSaving(false)
     }
@@ -52,6 +56,7 @@ export function RendasVariaveisPage() {
   const abrirEdicao = (r: RendaVariavel) => {
     setEditandoId(r.id)
     setEditForm(rendaParaForm(r))
+    setEditValorStr(String(r.valor))
     setEditError(null)
   }
 
@@ -69,7 +74,7 @@ export function RendasVariaveisPage() {
       await atualizar(editandoId, editForm)
       setEditandoId(null)
     } catch (err) {
-      setEditError(err instanceof Error ? err.message : 'Erro ao salvar')
+      setEditError(err instanceof Error ? err.message : (err as { message?: string }).message ?? 'Erro ao salvar')
     } finally {
       setEditSaving(false)
     }
@@ -80,7 +85,7 @@ export function RendasVariaveisPage() {
     try {
       await remover(id)
     } catch (err) {
-      setDeleteError(err instanceof Error ? err.message : 'Erro ao remover')
+      setDeleteError(err instanceof Error ? err.message : (err as { message?: string }).message ?? 'Erro ao remover')
     }
   }
 
@@ -104,7 +109,18 @@ export function RendasVariaveisPage() {
         </div>
         <div className={styles.fieldGroup}>
           <label className={styles.label}>valor</label>
-          <input type="number" min="0.01" step="0.01" value={form.valor || ''} onChange={e => setForm(p => ({ ...p, valor: parseFloat(e.target.value) || 0 }))} required />
+          <input
+            type="text"
+            inputMode="decimal"
+            value={valorStr}
+            required
+            onChange={e => {
+              const str = e.target.value
+              setValorStr(str)
+              const num = parseFloat(str.replace(',', '.'))
+              setForm(p => ({ ...p, valor: isNaN(num) ? 0 : num }))
+            }}
+          />
         </div>
         <div className={styles.fieldGroup}>
           <label className={styles.label}>data</label>
@@ -136,7 +152,18 @@ export function RendasVariaveisPage() {
                     </div>
                     <div className={styles.fieldGroup}>
                       <label className={styles.label}>valor</label>
-                      <input type="number" min="0.01" step="0.01" value={editForm.valor || ''} onChange={e => setEditForm(p => ({ ...p, valor: parseFloat(e.target.value) || 0 }))} required />
+                      <input
+                        type="text"
+                        inputMode="decimal"
+                        value={editValorStr}
+                        required
+                        onChange={e => {
+                          const str = e.target.value
+                          setEditValorStr(str)
+                          const num = parseFloat(str.replace(',', '.'))
+                          setEditForm(p => ({ ...p, valor: isNaN(num) ? 0 : num }))
+                        }}
+                      />
                     </div>
                     <div className={styles.fieldGroup}>
                       <label className={styles.label}>data</label>

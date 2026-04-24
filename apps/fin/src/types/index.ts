@@ -74,7 +74,7 @@ export interface DividaAntiga {
   id: string
   user_id: string
   nome: string
-  valor: number
+  valor: number | null
   data_ref: string | null
   observacao: string | null
   created_at: string

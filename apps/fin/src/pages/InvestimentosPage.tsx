@@ -21,6 +21,7 @@ export function InvestimentosPage() {
   const mes = mesAtual()
   const { investimentos, loading, error, adicionar, remover } = useInvestimentos(mes)
   const [form, setForm] = useState<NovoInvestimento>(FORM_INICIAL)
+  const [valorStr, setValorStr] = useState('')
   const [saving, setSaving] = useState(false)
   const [formError, setFormError] = useState<string | null>(null)
 
@@ -33,8 +34,9 @@ export function InvestimentosPage() {
     try {
       await adicionar(form)
       setForm({ ...FORM_INICIAL, data: new Date().toISOString().slice(0, 10) })
+      setValorStr('')
     } catch (err) {
-      setFormError(err instanceof Error ? err.message : 'Erro ao adicionar')
+      setFormError(err instanceof Error ? err.message : (err as { message?: string }).message ?? 'Erro ao adicionar')
     } finally {
       setSaving(false)
     }
@@ -60,7 +62,18 @@ export function InvestimentosPage() {
         </div>
         <div className={styles.fieldGroup}>
           <label className={styles.label}>valor</label>
-          <input type="number" min="0.01" step="0.01" value={form.valor || ''} onChange={e => setForm(p => ({ ...p, valor: parseFloat(e.target.value) || 0 }))} required />
+          <input
+            type="text"
+            inputMode="decimal"
+            value={valorStr}
+            required
+            onChange={e => {
+              const str = e.target.value
+              setValorStr(str)
+              const num = parseFloat(str.replace(',', '.'))
+              setForm(p => ({ ...p, valor: isNaN(num) ? 0 : num }))
+            }}
+          />
         </div>
         <div className={styles.fieldGroup}>
           <label className={styles.label}>categoria</label>
